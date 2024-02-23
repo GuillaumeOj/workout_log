@@ -1,0 +1,24 @@
+pull_request_rules:
+  - name: Automatic merge when CI passes
+    conditions:
+      - check-success=lint-backend
+      - check-success=ci-backend
+      - check-success=lint-frontend
+      - base=main
+      - author=GuillaumeOj
+    actions:
+      merge:
+        method: squash
+  - name: Queue dependabot PRs
+    conditions:
+      - base=main
+      - author=dependabot[bot]
+      - approved-reviews-by=GuillaumeOj
+    actions:
+      queue:
+        merge_method: squash
+  - name: Delete head branch after merge
+    conditions:
+      - merged
+    actions:
+      delete_head_branch:
