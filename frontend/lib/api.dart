@@ -97,16 +97,17 @@ class ApiService {
     return json.decode(response.body);
   }
 
-  Future<Iterable<String>> searchEquipment(
-    String equipmentName, {
+  Future<Iterable<String>> searchName(
+    String name,
+    String type, {
     Map<String, String> headers = const {},
     int expectedStatus = HttpStatus.ok,
   }) async {
-    if (equipmentName == "") {
+    if (name == "" || type == "") {
       return const Iterable<String>.empty();
     }
 
-    final queryParameters = {"equipment": equipmentName};
+    final queryParameters = {type: name};
     final response = await search(queryParameters,
         headers: headers, expectedStatus: expectedStatus);
 

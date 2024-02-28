@@ -1,3 +1,4 @@
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wod_board_app/api.dart';
@@ -19,7 +20,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       children: const <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(children: [_AsyncAutocomplete()]),
+          child: Column(children: [
+            _AsyncAutocomplete("equipment"),
+            _AsyncAutocomplete("movement")
+          ]),
         ),
       ],
     );
@@ -27,7 +31,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 }
 
 class _AsyncAutocomplete extends StatefulWidget {
-  const _AsyncAutocomplete();
+  const _AsyncAutocomplete(this.searchType);
+
+  final String searchType;
 
   @override
   State<_AsyncAutocomplete> createState() => _AsyncAutocompleteState();
@@ -46,8 +52,8 @@ class _AsyncAutocompleteState extends State<_AsyncAutocomplete> {
     return Autocomplete<String>(
       optionsBuilder: (TextEditingValue textEditingValue) async {
         _searchingWithQuery = textEditingValue.text;
-        final Iterable<String> options =
-            await apiService.searchEquipment(_searchingWithQuery!);
+        final Iterable<String> options = await apiService.searchName(
+            _searchingWithQuery!, widget.searchType);
 
         if (_searchingWithQuery != textEditingValue.text) {
           return _lastOptions;
@@ -69,9 +75,9 @@ class _AsyncAutocompleteState extends State<_AsyncAutocomplete> {
           onFieldSubmitted: (String value) {
             onFieldSubmitted();
           },
-          decoration: const InputDecoration(
-            hintText: "Equipment",
-            labelText: "Equipment",
+          decoration: InputDecoration(
+            hintText: StringUtils.capitalize(widget.searchType),
+            labelText: StringUtils.capitalize(widget.searchType),
           ),
         );
       },
