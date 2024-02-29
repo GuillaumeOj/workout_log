@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wod_board_app/widgets/auto_complete/auto_complete_name.dart';
-import 'package:wod_board_app/widgets/duration/add_duration.dart';
+import 'package:wod_board_app/widgets/movement/add_movement.dart';
 
 const Duration debounceDuration = Duration(milliseconds: 500);
 
@@ -17,12 +16,12 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     return ListView(
       children: const <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(children: [
-            AsyncAutocompleteName("equipment"),
-            AsyncAutocompleteName("movement"),
-            AddDuration(),
-          ]),
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            children: [
+              AddMovement(),
+            ],
+          ),
         ),
       ],
     );

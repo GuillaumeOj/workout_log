@@ -50,7 +50,10 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
             onFieldSubmitted();
           },
           decoration: InputDecoration(
-            labelText: StringUtils.capitalize(widget.searchType),
+            labelText: "${StringUtils.capitalize(widget.searchType)} name",
+            labelStyle: const TextStyle(
+              fontSize: 15.0,
+            ),
           ),
         );
       },

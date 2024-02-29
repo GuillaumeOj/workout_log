@@ -14,13 +14,14 @@ class _AddDurationState extends State<AddDuration> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        const Padding(padding: EdgeInsets.symmetric(vertical: 15.0)),
+      children: <Widget>[
         const Align(
           alignment: Alignment.centerLeft,
           child: Text(
             "Duration",
-            style: TextStyle(fontSize: 15.0),
+            style: TextStyle(
+              fontSize: 15.0,
+            ),
           ),
         ),
         Row(
@@ -33,19 +34,32 @@ class _AddDurationState extends State<AddDuration> {
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   labelText: "Seconds",
+                  labelStyle: TextStyle(
+                    fontSize: 15.0,
+                  ),
                 ),
-                style: const TextStyle(fontSize: 15.0),
+                style: const TextStyle(
+                  fontSize: 15.0,
+                ),
               ),
             ),
-            const Padding(padding: EdgeInsets.symmetric(horizontal: 20.0)),
+            const Padding(
+                padding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+            )),
             Expanded(
               child: TextFormField(
                 controller: _minutesController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   labelText: "Minutes",
+                  labelStyle: TextStyle(
+                    fontSize: 15.0,
+                  ),
                 ),
-                style: const TextStyle(fontSize: 15.0),
+                style: const TextStyle(
+                  fontSize: 15.0,
+                ),
               ),
             ),
           ],
