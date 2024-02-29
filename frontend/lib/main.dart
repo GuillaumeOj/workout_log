@@ -58,8 +58,7 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Wod Board',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.blue, brightness: Brightness.dark),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: Scaffold(
