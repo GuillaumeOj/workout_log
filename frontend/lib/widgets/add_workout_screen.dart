@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wod_board_app/api.dart';
 import 'package:wod_board_app/settings.dart';
+import 'package:wod_board_app/widgets/duration/add_duration.dart';
 
 const Duration debounceDuration = Duration(milliseconds: 500);
 
@@ -22,7 +23,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(children: [
             _AsyncAutocomplete("equipment"),
-            _AsyncAutocomplete("movement")
+            _AsyncAutocomplete("movement"),
+            AddDuration(),
           ]),
         ),
       ],
@@ -76,7 +78,6 @@ class _AsyncAutocompleteState extends State<_AsyncAutocomplete> {
             onFieldSubmitted();
           },
           decoration: InputDecoration(
-            hintText: StringUtils.capitalize(widget.searchType),
             labelText: StringUtils.capitalize(widget.searchType),
           ),
         );
