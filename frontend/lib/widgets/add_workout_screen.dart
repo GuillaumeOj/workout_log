@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wod_board_app/widgets/movement/add_movement.dart';
+import 'package:wod_board_app/widgets/round/add_round.dart';
 
 const Duration debounceDuration = Duration(milliseconds: 500);
 
@@ -19,7 +19,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             children: [
-              AddMovement(),
+              AddRound(),
             ],
           ),
         ),

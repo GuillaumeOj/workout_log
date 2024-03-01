@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:wod_board_app/widgets/auto_complete/auto_complete_name.dart';
 import 'package:wod_board_app/widgets/misc/add_duration_repetition_panel.dart';
+import 'package:wod_board_app/widgets/movement/add_movement.dart';
 
-class AddMovement extends StatefulWidget {
-  const AddMovement({super.key});
+class AddRound extends StatefulWidget {
+  const AddRound({super.key});
 
   @override
-  State<AddMovement> createState() => _AddMovementState();
+  State<AddRound> createState() => _AddRoundState();
 }
 
-class _AddMovementState extends State<AddMovement> {
+class _AddRoundState extends State<AddRound> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,15 +24,18 @@ class _AddMovementState extends State<AddMovement> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Movement #1",
+              "Round #1",
               style: TextStyle(fontSize: 20.0),
             ),
           ),
-          AsyncAutocompleteName("movement"),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 15.0),
           ),
           AddDurationRepetitionPanelList(),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+          ),
+          AddMovement(),
         ],
       ),
     );
