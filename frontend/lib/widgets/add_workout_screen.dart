@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wod_board_app/settings.dart';
 import 'package:wod_board_app/widgets/round/add_round.dart';
+
+import 'login_form.dart';
 
 const Duration debounceDuration = Duration(milliseconds: 500);
 
@@ -13,15 +17,20 @@ class AddWorkoutScreen extends StatefulWidget {
 class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
+    var settingsProvider = Provider.of<SettingProvider>(context);
+    var currentUser = settingsProvider.currentUser;
+
     return ListView(
-      children: const <Widget>[
+      children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            children: [
-              AddRound(),
-            ],
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: currentUser.isAnonymous == true
+              ? const LoginForm()
+              : const Column(
+                  children: [
+                    AddRound(),
+                  ],
+                ),
         ),
       ],
     );
