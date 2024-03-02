@@ -15,8 +15,22 @@ class AsyncAutocompleteName extends StatefulWidget {
 
 class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
   String? _searchingWithQuery;
+  final GlobalKey _autocompleteFormKey = GlobalKey();
+  double _autocompleFormFieldWidth = 0.0;
 
   late Iterable<String> _lastOptions = <String>[];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final RenderBox renderBox =
+          _autocompleteFormKey.currentContext?.findRenderObject() as RenderBox;
+      setState(() {
+        _autocompleFormFieldWidth = renderBox.size.width;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +51,40 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
 
         return options;
       },
+      optionsViewBuilder: (
+        BuildContext context,
+        AutocompleteOnSelected<String> onSelected,
+        Iterable<String> options,
+      ) {
+        return LayoutBuilder(
+          builder: (
+            BuildContext context,
+            BoxConstraints constraints,
+          ) {
+            return Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: _autocompleFormFieldWidth,
+                child: Material(
+                  elevation: 4.0,
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    children: options
+                        .map((String option) => ListTile(
+                              title: Text(option),
+                              onTap: () {
+                                onSelected(option);
+                              },
+                            ))
+                        .toList(),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
       fieldViewBuilder: (
         BuildContext context,
         TextEditingController textEditingController,
@@ -44,6 +92,7 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
         VoidCallback onFieldSubmitted,
       ) {
         return TextFormField(
+          key: _autocompleteFormKey,
           controller: textEditingController,
           focusNode: focusNode,
           onFieldSubmitted: (String value) {
