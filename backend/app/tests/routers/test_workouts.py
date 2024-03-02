@@ -138,4 +138,4 @@ def test_get_workout_types(client: TestClient):
     response = client.get("/workouts/workout-types")
 
     assert response.status_code == 200
-    assert response.json() == WorkoutType.values()
+    assert response.json() == {"values": WorkoutType.values()}
