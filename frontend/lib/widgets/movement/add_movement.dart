@@ -13,10 +13,11 @@ class _AddMovementState extends State<AddMovement> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
         border: Border.all(
-          color: Colors.blue,
+          color: Colors.grey,
         ),
       ),
       child: const Column(
