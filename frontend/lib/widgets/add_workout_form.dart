@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:wod_board_app/widgets/misc/choice_list.dart';
 import 'package:wod_board_app/widgets/round/add_round.dart';
 
 class AddWorkoutForm extends StatefulWidget {
@@ -32,6 +35,23 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
               vertical: 15.0,
             ),
           ),
+          Row(
+            children: [
+              Expanded(
+                child: DropdownListFromAPI(
+                  path: 'workouts/workout-types',
+                  onSelected: (String value) {
+                    log(value);
+                  },
+                ),
+              ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 15.0,
+            ),
+          ),
           const AddRound(),
           const Padding(
             padding: EdgeInsets.symmetric(
@@ -41,7 +61,10 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
           ElevatedButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Processing Data')),
+                const SnackBar(
+                  backgroundColor: Colors.green,
+                  content: Text('Processing Data'),
+                ),
               );
             },
             child: const Text('Submit'),

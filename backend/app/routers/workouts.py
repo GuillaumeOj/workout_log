@@ -35,6 +35,11 @@ async def create_workout(
     return WorkoutDetail.from_db(db_workout)
 
 
-@router.get("/workout-types", response_model=list[WorkoutType])
+@router.get("/workout-types", response_model=dict, status_code=status.HTTP_200_OK)
 async def get_workout_types():
-    return [workout_type for workout_type in WorkoutType]
+    """Retrieve all the available workout types.
+
+    Returns:
+        dict: A dictionary with the available workout types under the key "values".
+    """
+    return {"values": [workout_type for workout_type in WorkoutType]}
