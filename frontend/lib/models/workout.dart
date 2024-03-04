@@ -1,37 +1,22 @@
-class Equipment {
-  Equipment({
-    required this.id,
-    required this.name,
-  });
-
-  String id;
-  String name;
-
-  factory Equipment.fromJson(Map<String, dynamic> json) => Equipment(
-        id: json["id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-      };
-}
-
 class CreateMovement {
   CreateMovement({
     required this.name,
     required this.position,
     this.durationSeconds,
     this.repetition,
-    this.equipment,
   });
 
   String name;
   int position;
   int? durationSeconds;
   int? repetition;
-  List<Equipment>? equipment;
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "position": position,
+        "duration_seconds": durationSeconds,
+        "repetition": repetition,
+      };
 }
 
 class CreateRound {
@@ -46,16 +31,32 @@ class CreateRound {
   int? durationSeconds;
   int? repetition;
   List<CreateMovement>? movements;
+
+  Map<String, dynamic> toJson() => {
+        "position": position,
+        "duration_seconds": durationSeconds,
+        "repetition": repetition,
+        "movements": movements?.map((x) => x.toJson()).toList(),
+      };
 }
 
 class CreateWorkout {
   CreateWorkout({
-    this.name,
+    required this.name,
     this.description,
+    required this.workoutType,
     this.rounds,
   });
 
-  String? name;
+  String name;
   String? description;
+  String workoutType;
   List<CreateRound>? rounds;
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "description": description,
+        "workout_type": workoutType,
+        "rounds": rounds?.map((x) => x.toJson()).toList(),
+      };
 }
