@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wod_board_app/api.dart';
-import 'package:wod_board_app/settings.dart';
 
 class DropdownList extends StatefulWidget {
   const DropdownList(
@@ -15,7 +13,6 @@ class DropdownList extends StatefulWidget {
 }
 
 class _DropdownListState extends State<DropdownList> {
-  String dropdownValue = "";
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -35,9 +32,7 @@ class _DropdownListState extends State<DropdownList> {
           );
         }).toList(),
         onSelected: (String? value) {
-          setState(() {
-            dropdownValue = value!;
-          });
+          widget.onSelected(value!);
         },
       );
     });
@@ -58,8 +53,7 @@ class DropdownListFromAPI extends StatefulWidget {
 class _DropdownListFromAPIState extends State<DropdownListFromAPI> {
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = Provider.of<SettingProvider>(context);
-    var apiService = ApiService(settingsProvider);
+    var apiService = ApiService(context);
 
     return FutureBuilder<List<String>>(
       future: fetchChoices(widget.path, apiService),

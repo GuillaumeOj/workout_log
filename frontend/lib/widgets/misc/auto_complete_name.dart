@@ -1,8 +1,6 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wod_board_app/api.dart';
-import 'package:wod_board_app/settings.dart';
 
 class AsyncAutocompleteName extends StatefulWidget {
   const AsyncAutocompleteName(
@@ -39,8 +37,7 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
 
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = Provider.of<SettingProvider>(context);
-    var apiService = ApiService(settingsProvider);
+    var apiService = ApiService(context);
 
     return Autocomplete<String>(
       optionsBuilder: (TextEditingValue textEditingValue) async {
