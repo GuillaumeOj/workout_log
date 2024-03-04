@@ -5,9 +5,14 @@ import 'package:wod_board_app/api.dart';
 import 'package:wod_board_app/settings.dart';
 
 class AsyncAutocompleteName extends StatefulWidget {
-  const AsyncAutocompleteName(this.searchType, {super.key});
+  const AsyncAutocompleteName(
+    this.searchType, {
+    super.key,
+    this.isRequired = false,
+  });
 
   final String searchType;
+  final bool isRequired;
 
   @override
   State<AsyncAutocompleteName> createState() => _AsyncAutocompleteNameState();
@@ -104,6 +109,12 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
               fontSize: 15.0,
             ),
           ),
+          validator: (value) {
+            if (widget.isRequired && value!.isEmpty) {
+              return "Please enter a ${widget.searchType} name";
+            }
+            return null;
+          },
         );
       },
     );

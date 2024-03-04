@@ -24,6 +24,12 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
             decoration: const InputDecoration(
               labelText: "Name",
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter a name for the workout";
+              }
+              return null;
+            },
           ),
           TextFormField(
             decoration: const InputDecoration(
@@ -60,12 +66,14 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
           ),
           ElevatedButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  backgroundColor: Colors.green,
-                  content: Text('Processing Data'),
-                ),
-              );
+              if (_formkey.currentState!.validate()) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    backgroundColor: Colors.green,
+                    content: Text('Processing Data'),
+                  ),
+                );
+              }
             },
             child: const Text('Submit'),
           ),

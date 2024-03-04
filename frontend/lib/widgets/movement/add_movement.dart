@@ -29,7 +29,7 @@ class _AddMovementState extends State<AddMovement> {
               style: TextStyle(fontSize: 20.0),
             ),
           ),
-          AsyncAutocompleteName("movement"),
+          AsyncAutocompleteName("movement", isRequired: true),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 15.0),
           ),
