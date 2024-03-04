@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:wod_board_app/api.dart';
+import 'package:wod_board_app/models/workout.dart';
 import 'package:wod_board_app/widgets/misc/choice_list.dart';
 import 'package:wod_board_app/widgets/round/add_round.dart';
 
@@ -13,14 +15,20 @@ class AddWorkoutForm extends StatefulWidget {
 
 class _AddWorkoutFormState extends State<AddWorkoutForm> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
+  late String _selectedWorkoutType;
 
   @override
   Widget build(BuildContext context) {
+    final apiService = ApiService(context);
     return Form(
       key: _formkey,
       child: Column(
         children: [
           TextFormField(
+            controller: _nameController,
             decoration: const InputDecoration(
               labelText: "Name",
             ),
@@ -32,6 +40,7 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
             },
           ),
           TextFormField(
+            controller: _descriptionController,
             decoration: const InputDecoration(
               labelText: "Description",
             ),
@@ -47,7 +56,9 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                 child: DropdownListFromAPI(
                   path: 'workouts/workout-types',
                   onSelected: (String value) {
-                    log(value);
+                    setState(() {
+                      _selectedWorkoutType = value;
+                    });
                   },
                 ),
               ),
@@ -65,14 +76,36 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formkey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    backgroundColor: Colors.green,
-                    content: Text('Processing Data'),
-                  ),
+                String name = _nameController.text;
+                String description = _descriptionController.text;
+                String workoutType = _selectedWorkoutType;
+
+                CreateWorkout workout = CreateWorkout(
+                  name: name,
+                  description: description,
+                  workoutType: workoutType,
                 );
+
+                try {
+                  await apiService.postData(
+                    "/workouts",
+                    data: workout.toJson(),
+                  );
+
+                  if (mounted) {
+                    // ignore: use_build_context_synchronously
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text('Workout created'),
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  log(e.toString());
+                }
               }
             },
             child: const Text('Submit'),

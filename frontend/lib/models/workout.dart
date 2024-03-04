@@ -56,7 +56,6 @@ class CreateWorkout {
   Map<String, dynamic> toJson() => {
         "name": name,
         "description": description,
-        "workout_type": workoutType,
-        "rounds": rounds?.map((x) => x.toJson()).toList(),
+        "workoutType": workoutType,
       };
 }
