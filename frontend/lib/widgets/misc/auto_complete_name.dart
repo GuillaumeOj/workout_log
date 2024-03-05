@@ -7,10 +7,13 @@ class AsyncAutocompleteName extends StatefulWidget {
     this.searchType, {
     super.key,
     this.isRequired = false,
+    required this.onChanged,
   });
 
   final String searchType;
   final bool isRequired;
+
+  final void Function(String) onChanged;
 
   @override
   State<AsyncAutocompleteName> createState() => _AsyncAutocompleteNameState();
@@ -77,6 +80,7 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
                               title: Text(option),
                               onTap: () {
                                 onSelected(option);
+                                widget.onChanged(option);
                               },
                             ))
                         .toList(),

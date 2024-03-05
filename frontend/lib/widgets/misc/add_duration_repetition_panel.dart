@@ -3,7 +3,14 @@ import 'package:wod_board_app/widgets/misc/add_duration.dart';
 import 'package:wod_board_app/widgets/misc/add_repetition.dart';
 
 class AddDurationRepetitionPanelList extends StatefulWidget {
-  const AddDurationRepetitionPanelList({super.key});
+  const AddDurationRepetitionPanelList({
+    super.key,
+    required this.onDurationChanged,
+    required this.onRepetitionsChanged,
+  });
+
+  final void Function(int) onDurationChanged;
+  final void Function(int) onRepetitionsChanged;
 
   @override
   State<AddDurationRepetitionPanelList> createState() =>
@@ -29,8 +36,8 @@ class _AddDurationRepetitionPanelListState
               title: Text('Repetition / Duration'),
             );
           },
-          body: const Padding(
-            padding: EdgeInsets.fromLTRB(
+          body: Padding(
+            padding: const EdgeInsets.fromLTRB(
               15.0,
               0,
               15.0,
@@ -39,8 +46,8 @@ class _AddDurationRepetitionPanelListState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AddDuration(),
-                AddRepetition(),
+                AddDuration(onDurationChanged: widget.onDurationChanged),
+                AddRepetition(onRepetitionChanged: widget.onRepetitionsChanged),
               ],
             ),
           ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AddDuration extends StatefulWidget {
-  const AddDuration({super.key});
+  const AddDuration({super.key, required this.onDurationChanged});
+
+  final void Function(int) onDurationChanged;
 
   @override
   State<AddDuration> createState() => _AddDurationState();
@@ -10,6 +12,8 @@ class AddDuration extends StatefulWidget {
 class _AddDurationState extends State<AddDuration> {
   final TextEditingController _secondsController = TextEditingController();
   final TextEditingController _minutesController = TextEditingController();
+
+  Duration duration = const Duration();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,11 @@ class _AddDurationState extends State<AddDuration> {
                 style: const TextStyle(
                   fontSize: 15.0,
                 ),
+                onChanged: (String value) {
+                  duration = Duration(
+                      minutes: duration.inMinutes, seconds: int.parse(value));
+                  widget.onDurationChanged(duration.inSeconds);
+                },
               ),
             ),
             const Padding(
@@ -60,6 +69,11 @@ class _AddDurationState extends State<AddDuration> {
                 style: const TextStyle(
                   fontSize: 15.0,
                 ),
+                onChanged: (String value) {
+                  duration = Duration(
+                      minutes: int.parse(value), seconds: duration.inSeconds);
+                  widget.onDurationChanged(duration.inSeconds);
+                },
               ),
             ),
           ],

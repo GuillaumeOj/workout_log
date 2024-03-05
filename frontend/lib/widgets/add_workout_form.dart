@@ -19,6 +19,11 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
   final TextEditingController _descriptionController = TextEditingController();
 
   late String _selectedWorkoutType;
+  CreateWorkout workout = CreateWorkout(name: "", workoutType: "AMRAP");
+
+  void onRoundChanged(CreateRound round) {
+    workout.rounds = [round];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +61,7 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                 child: DropdownListFromAPI(
                   path: 'workouts/workout-types',
                   onSelected: (String value) {
-                    setState(() {
-                      _selectedWorkoutType = value;
-                    });
+                    _selectedWorkoutType = value;
                   },
                 ),
               ),
@@ -69,7 +72,7 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
               vertical: 15.0,
             ),
           ),
-          const AddRound(),
+          AddRound(onRoundChanged: onRoundChanged),
           const Padding(
             padding: EdgeInsets.symmetric(
               vertical: 15.0,
@@ -82,11 +85,9 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                 String description = _descriptionController.text;
                 String workoutType = _selectedWorkoutType;
 
-                CreateWorkout workout = CreateWorkout(
-                  name: name,
-                  description: description,
-                  workoutType: workoutType,
-                );
+                workout.name = name;
+                workout.description = description;
+                workout.workoutType = workoutType;
 
                 try {
                   await apiService.postData(
