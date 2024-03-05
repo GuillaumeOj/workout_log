@@ -65,22 +65,22 @@ def test_create_workout_with_rounds_and_movements(
             {
                 "durationSeconds": 0,
                 "position": 1,
-                "repetition": 0,
+                "repetitions": 0,
                 "movements": [
                     {
                         "name": "Push Up",
                         "position": 1,
-                        "repetition": 100,
+                        "repetitions": 100,
                     },
                     {
                         "name": "Pull Up",
                         "position": 2,
-                        "repetition": 200,
+                        "repetitions": 200,
                     },
                     {
                         "name": "Push Up",
                         "position": 3,
-                        "repetition": 100,
+                        "repetitions": 100,
                     },
                 ],
             },
@@ -90,7 +90,7 @@ def test_create_workout_with_rounds_and_movements(
                     {
                         "name": "Deadlift",
                         "position": 1,
-                        "repetition": 20,
+                        "repetitions": 20,
                         "equipments": [
                             {
                                 "name": "Barbell",

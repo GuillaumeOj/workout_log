@@ -22,7 +22,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     var settingsProvider = Provider.of<SettingProvider>(context);
-    var apiService = ApiService(settingsProvider);
+    var apiService = ApiService(context);
 
     return Form(
       key: _formkey,

@@ -1,13 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wod_board_app/settings.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final SettingProvider settingsProvider;
+  final BuildContext context;
+  late SettingProvider settingsProvider;
 
-  ApiService(this.settingsProvider);
+  ApiService(this.context) {
+    settingsProvider = Provider.of<SettingProvider>(context);
+  }
 
   String get scheme =>
       settingsProvider.environnment == "dev" ? "http" : "https";
@@ -62,13 +67,13 @@ class ApiService {
   }) async {
     Uri postUrl = getUrl(path, queryParameters);
     var endpointHeaders = getHeaders(headers);
-    Map<String, dynamic> body;
+    Object body;
 
     if (endpointHeaders["Content-Type"] ==
         "application/x-www-form-urlencoded") {
       body = data;
     } else {
-      body = json.encode(data) as Map<String, dynamic>;
+      body = json.encode(data);
     }
     final response =
         await http.post(postUrl, body: body, headers: endpointHeaders);
