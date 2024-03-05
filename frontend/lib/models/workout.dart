@@ -3,19 +3,19 @@ class CreateMovement {
     required this.name,
     required this.position,
     this.durationSeconds,
-    this.repetition,
+    this.repetitions,
   });
 
   String name;
   int position;
   int? durationSeconds;
-  int? repetition;
+  int? repetitions;
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "position": position,
-        "duration_seconds": durationSeconds,
-        "repetition": repetition,
+        "durationSeconds": durationSeconds,
+        "repetitions": repetitions,
       };
 }
 
@@ -23,19 +23,19 @@ class CreateRound {
   CreateRound({
     required this.position,
     this.durationSeconds,
-    this.repetition,
+    this.repetitions,
     this.movements,
   });
 
   int position;
   int? durationSeconds;
-  int? repetition;
+  int? repetitions;
   List<CreateMovement>? movements;
 
   Map<String, dynamic> toJson() => {
         "position": position,
-        "duration_seconds": durationSeconds,
-        "repetition": repetition,
+        "durationSeconds": durationSeconds,
+        "repetitions": repetitions,
         "movements": movements?.map((x) => x.toJson()).toList(),
       };
 }
@@ -57,5 +57,6 @@ class CreateWorkout {
         "name": name,
         "description": description,
         "workoutType": workoutType,
+        "rounds": rounds?.map((x) => x.toJson()).toList(),
       };
 }
