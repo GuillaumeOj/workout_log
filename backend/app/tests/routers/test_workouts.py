@@ -139,3 +139,20 @@ def test_get_workout_types(client: TestClient):
 
     assert response.status_code == 200
     assert response.json() == {"values": WorkoutType.values()}
+
+
+def test_get_workouts(client: TestClient, foo_token: tuple[Token, User, Session], workout: Workout):
+    token, user, _ = foo_token
+
+    # User is not authenticated
+    response = client.get("/workouts")
+    assert response.status_code == 401
+
+    # User is authenticated
+    headers = {"Authorization": f"{token.token_type} {token.access_token}"}
+    response = client.get("/workouts", headers=headers)
+    assert response.status_code == 200
+    workouts = response.json()
+    assert len(workouts) == 1
+    assert workouts[0] == WorkoutDetail.from_db(workout).model_dump(mode="json", by_alias=True)
+    assert workouts[0]["userId"] == str(user.id)

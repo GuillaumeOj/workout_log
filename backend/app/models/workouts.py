@@ -83,7 +83,7 @@ class Movement(WodBoardDatabseBase, MovementBase, table=True):
 class MovementCreate(MovementBase):
     duration_seconds: int = Field(default=0)
     position: int
-    repetition: int = Field(default=0)
+    repetitions: int = Field(default=0)
     equipments: list[EquipmentCreate] = []
 
 

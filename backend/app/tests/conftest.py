@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 from sqlmodel import Session, SQLModel, create_engine
 
 from app.database import get_session
+from app.fixtures.workouts import create_workout as create_fixture_workout
 from app.main import app
 from app.models.tokens import Token
 from app.models.users import User
@@ -69,6 +70,15 @@ def create_foo_user(session, password):
     session.commit()
 
     yield user, session
+
+
+@pytest.fixture(name="workout")
+def create_workout(session, foo_user):
+    user, session = foo_user
+
+    workout = create_fixture_workout(session, user)
+
+    yield workout
 
 
 @pytest.fixture(name="foo_token")

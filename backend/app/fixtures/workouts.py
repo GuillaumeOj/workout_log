@@ -1,6 +1,15 @@
 from sqlmodel import Session
 
-from app.models.workouts import Equipment, Movement
+from app.crud.workout import create_rounds
+from app.models.users import User
+from app.models.workouts import (
+    Equipment,
+    Movement,
+    MovementCreate,
+    RoundCreate,
+    Workout,
+    WorkoutType,
+)
 
 
 def create_equiments(session: Session) -> None:
@@ -37,3 +46,24 @@ def create_movements(session: Session) -> None:
 
     session.add_all(movements)
     session.commit()
+
+
+def create_workout(session: Session, user: User) -> Workout:
+    round = RoundCreate(position=1, repetitions=5)
+    movement = MovementCreate(name="squat", position=1, repetitions=5)
+    round.movements.append(movement)
+
+    rounds = create_rounds([round], session)
+
+    workout = Workout(
+        workout_type=WorkoutType.AMRAP,
+        name="Test workout",
+        description="This is a test workout",
+        user_id=user.id,
+        rounds=rounds,
+    )
+    session.add(workout)
+    session.commit()
+    session.refresh(workout)
+
+    return workout

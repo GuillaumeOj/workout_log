@@ -1,6 +1,7 @@
 from sqlalchemy.exc import NoResultFound
 from sqlmodel import Session, select
 
+from app.models.users import User
 from app.models.workouts import (
     Equipment,
     EquipmentCreate,
@@ -10,6 +11,7 @@ from app.models.workouts import (
     Round,
     RoundCreate,
     RoundMovementLink,
+    Workout,
 )
 
 
@@ -89,7 +91,7 @@ def create_movements_with_round(
             round=round,
             duration_seconds=movement.duration_seconds,
             position=movement.position,
-            repetitions=movement.repetition,
+            repetitions=movement.repetitions,
         )
         round_movement_links.append(round_movement_link)
         db_movements.append(db_movement)
@@ -116,3 +118,9 @@ def create_rounds(rounds: list[RoundCreate], session: Session, commit: bool = Fa
         session.commit()
 
     return db_rounds
+
+
+def get_workouts_by_user_id(user: User, session: Session) -> list[Workout]:
+    db_workouts = session.exec(select(Workout).where(Workout.user_id == user.id)).all()
+
+    return list(db_workouts)
