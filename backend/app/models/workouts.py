@@ -35,7 +35,7 @@ class RoundMovementLink(WodBoardDatabseBase, table=True):
     # Extra fields
     duration_seconds: int = Field(default=0)
     position: int
-    repetition: int = Field(default=0)
+    repetitions: int = Field(default=0)
 
     movement: "Movement" = Relationship(back_populates="round_links")
     round: "Round" = Relationship(back_populates="movement_links")
@@ -95,7 +95,7 @@ class MovementDetail(MovementBase):
     id: uuid_pkg.UUID
     duration_seconds: int
     position: int
-    repetition: int
+    repetitions: int
     equipments: list[EquipmentDetail] = []
 
     @classmethod
@@ -109,7 +109,7 @@ class MovementDetail(MovementBase):
         return cls(
             id=movement.id,
             duration_seconds=movement_link.duration_seconds,
-            repetition=movement_link.repetition,
+            repetitions=movement_link.repetitions,
             position=movement_link.position,
             name=movement.name,
             equipments=equiments_detail,
@@ -119,7 +119,7 @@ class MovementDetail(MovementBase):
 class RoundBase(WodBoardBase):
     duration_seconds: int = Field(default=0)
     position: int
-    repetition: int = Field(default=0)
+    repetitions: int = Field(default=0)
 
 
 class Round(WodBoardDatabseBase, RoundBase, table=True):
@@ -149,7 +149,7 @@ class RoundDetail(RoundBase):
         return cls(
             id=round.id,
             duration_seconds=round.duration_seconds,
-            repetition=round.repetition,
+            repetitions=round.repetitions,
             position=round.position,
             movements=movements_detail,
         )
