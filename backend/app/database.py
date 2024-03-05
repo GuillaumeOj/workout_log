@@ -1,7 +1,7 @@
 from sqlmodel import Session, SQLModel, create_engine
 
 from app.fixtures.users import create_user
-from app.fixtures.workouts import create_equiments, create_movements
+from app.fixtures.workouts import create_equiments, create_movements, create_workout
 from app.models.users import *  # noqa: F401, F403
 from app.models.workouts import *  # noqa: F401, F403
 from app.settings import settings
@@ -34,7 +34,8 @@ def init_db():
     with Session(sync_engine) as session:
         create_equiments(session)
         create_movements(session)
-        create_user(session)
+        user = create_user(session)
+        create_workout(session, user)
 
 
 def drop_db():
