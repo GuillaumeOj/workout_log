@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wod_board_app/api.dart';
-import 'package:wod_board_app/settings.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = Provider.of<SettingProvider>(context);
-    var apiService = ApiService(settingsProvider);
+    var apiService = ApiService(context);
     return Center(
       child: Column(
         children: [

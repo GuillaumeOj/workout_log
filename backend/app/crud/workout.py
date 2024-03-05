@@ -89,7 +89,7 @@ def create_movements_with_round(
             round=round,
             duration_seconds=movement.duration_seconds,
             position=movement.position,
-            repetition=movement.repetition,
+            repetitions=movement.repetition,
         )
         round_movement_links.append(round_movement_link)
         db_movements.append(db_movement)

@@ -1,13 +1,19 @@
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wod_board_app/api.dart';
-import 'package:wod_board_app/settings.dart';
 
 class AsyncAutocompleteName extends StatefulWidget {
-  const AsyncAutocompleteName(this.searchType, {super.key});
+  const AsyncAutocompleteName(
+    this.searchType, {
+    super.key,
+    this.isRequired = false,
+    required this.onChanged,
+  });
 
   final String searchType;
+  final bool isRequired;
+
+  final void Function(String) onChanged;
 
   @override
   State<AsyncAutocompleteName> createState() => _AsyncAutocompleteNameState();
@@ -34,8 +40,7 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
 
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = Provider.of<SettingProvider>(context);
-    var apiService = ApiService(settingsProvider);
+    var apiService = ApiService(context);
 
     return Autocomplete<String>(
       optionsBuilder: (TextEditingValue textEditingValue) async {
@@ -75,6 +80,7 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
                               title: Text(option),
                               onTap: () {
                                 onSelected(option);
+                                widget.onChanged(option);
                               },
                             ))
                         .toList(),
@@ -104,6 +110,12 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
               fontSize: 15.0,
             ),
           ),
+          validator: (value) {
+            if (widget.isRequired && value!.isEmpty) {
+              return "Please enter a ${widget.searchType} name";
+            }
+            return null;
+          },
         );
       },
     );
