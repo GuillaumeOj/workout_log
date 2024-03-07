@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wod_board_app/settings.dart';
-import 'package:wod_board_app/widgets/add_workout_form.dart';
+import 'package:wod_board_app/widgets/workouts/add_workout_form.dart';
 import 'package:wod_board_app/widgets/login_form.dart';
 
 const Duration debounceDuration = Duration(milliseconds: 500);
