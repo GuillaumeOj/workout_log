@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:wod_board_app/api.dart';
+import "package:flutter/material.dart";
+import "package:wod_board_app/api.dart";
 
 class DropdownList extends StatefulWidget {
   const DropdownList(
@@ -61,7 +61,7 @@ class _DropdownListFromAPIState extends State<DropdownListFromAPI> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return Text("Error: ${snapshot.error}");
         } else {
           return DropdownList(
             choices: snapshot.data!,

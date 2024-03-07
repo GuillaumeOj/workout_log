@@ -1,13 +1,13 @@
-import 'dart:io';
+import "dart:io";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:provider/provider.dart';
-import 'package:wod_board_app/settings.dart';
-import 'package:wod_board_app/widgets/workouts/create_workout_screen.dart';
-import 'package:wod_board_app/widgets/bottom_bar.dart';
-import 'package:wod_board_app/widgets/home_screen.dart';
-import 'package:wod_board_app/widgets/profile_screen.dart';
+import "package:flutter/material.dart";
+import "package:flutter_dotenv/flutter_dotenv.dart";
+import "package:provider/provider.dart";
+import "package:wod_board_app/settings.dart";
+import "package:wod_board_app/widgets/workouts/create_workout_screen.dart";
+import "package:wod_board_app/widgets/bottom_bar.dart";
+import "package:wod_board_app/widgets/home_screen.dart";
+import "package:wod_board_app/widgets/profile_screen.dart";
 
 Future main() async {
   await dotenv.load(mergeWith: Platform.environment);
@@ -56,7 +56,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Wod Board',
+      title: "Wod Board",
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,

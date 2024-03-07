@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:wod_board_app/widgets/misc/add_duration.dart';
-import 'package:wod_board_app/widgets/misc/add_repetition.dart';
+import "package:flutter/material.dart";
+import "package:wod_board_app/widgets/misc/add_duration.dart";
+import "package:wod_board_app/widgets/misc/add_repetition.dart";
 
 class AddDurationRepetitionPanelList extends StatefulWidget {
   const AddDurationRepetitionPanelList({
@@ -33,7 +33,7 @@ class _AddDurationRepetitionPanelListState
         ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
             return const ListTile(
-              title: Text('Repetition / Duration'),
+              title: Text("Repetition / Duration"),
             );
           },
           body: Padding(

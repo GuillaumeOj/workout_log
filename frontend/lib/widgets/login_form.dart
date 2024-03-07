@@ -1,11 +1,11 @@
-import 'dart:developer' as dev;
-import 'dart:io';
+import "dart:developer" as dev;
+import "dart:io";
 
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:wod_board_app/api.dart';
-import 'package:wod_board_app/models/user.dart';
-import 'package:wod_board_app/settings.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:wod_board_app/api.dart";
+import "package:wod_board_app/models/user.dart";
+import "package:wod_board_app/settings.dart";
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});

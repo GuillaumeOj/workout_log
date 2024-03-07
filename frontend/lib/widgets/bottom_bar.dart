@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class BottomBar extends StatefulWidget {
   const BottomBar(
@@ -23,7 +23,9 @@ class _BottomBarState extends State<BottomBar> {
       onTap: widget.onTabTapped,
       items: widget.itemValues.map((item) {
         return BottomNavigationBarItem(
-            icon: item['icon'] as Icon, label: item['label'] as String);
+          icon: item["icon"] as Icon,
+          label: item["label"] as String,
+        );
       }).toList(),
     );
   }

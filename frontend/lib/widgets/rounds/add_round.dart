@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:wod_board_app/models/workout.dart';
-import 'package:wod_board_app/widgets/misc/add_duration_repetition_panel.dart';
-import 'package:wod_board_app/widgets/movements/add_movement.dart';
+import "package:flutter/material.dart";
+import "package:wod_board_app/models/workout.dart";
+import "package:wod_board_app/widgets/misc/add_duration_repetition_panel.dart";
+import "package:wod_board_app/widgets/movements/add_movement.dart";
 
 class AddRound extends StatefulWidget {
   const AddRound({super.key, required this.onRoundChanged});
