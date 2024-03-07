@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:wod_board_app/settings.dart';
-import 'package:wod_board_app/widgets/workouts/add_workout_screen.dart';
+import 'package:wod_board_app/widgets/workouts/create_workout_screen.dart';
 import 'package:wod_board_app/widgets/bottom_bar.dart';
 import 'package:wod_board_app/widgets/home_screen.dart';
 import 'package:wod_board_app/widgets/profile_screen.dart';
