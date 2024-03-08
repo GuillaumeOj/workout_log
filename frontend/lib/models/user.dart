@@ -1,4 +1,4 @@
-import 'package:basic_utils/basic_utils.dart';
+import "package:basic_utils/basic_utils.dart";
 
 class User {
   User({
@@ -15,7 +15,7 @@ class User {
 
   @override
   String toString() {
-    return 'User{id: $id, username: $username}';
+    return "User{id: $id, username: $username}";
   }
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -48,7 +48,7 @@ class Token {
     } else {
       String capitalizedTokenType =
           StringUtils.capitalize(tokenType.toString());
-      return '$capitalizedTokenType $accessToken';
+      return "$capitalizedTokenType $accessToken";
     }
   }
 

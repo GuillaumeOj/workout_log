@@ -1,6 +1,6 @@
-import 'package:basic_utils/basic_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:wod_board_app/api.dart';
+import "package:basic_utils/basic_utils.dart";
+import "package:flutter/material.dart";
+import "package:wod_board_app/api.dart";
 
 class AsyncAutocompleteName extends StatefulWidget {
   const AsyncAutocompleteName(

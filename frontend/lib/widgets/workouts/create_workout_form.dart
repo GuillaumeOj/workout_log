@@ -1,10 +1,10 @@
-import 'dart:developer';
+import "dart:developer";
 
-import 'package:flutter/material.dart';
-import 'package:wod_board_app/api.dart';
-import 'package:wod_board_app/models/workout.dart';
-import 'package:wod_board_app/widgets/misc/choice_list.dart';
-import 'package:wod_board_app/widgets/round/add_round.dart';
+import "package:flutter/material.dart";
+import "package:wod_board_app/api.dart";
+import "package:wod_board_app/models/workout.dart";
+import "package:wod_board_app/widgets/misc/choice_list.dart";
+import "package:wod_board_app/widgets/rounds/add_round.dart";
 
 class AddWorkoutForm extends StatefulWidget {
   const AddWorkoutForm({super.key});
@@ -59,7 +59,7 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
             children: [
               Expanded(
                 child: DropdownListFromAPI(
-                  path: 'workouts/workout-types',
+                  path: "workouts/workout-types",
                   onSelected: (String value) {
                     _selectedWorkoutType = value;
                   },
@@ -100,7 +100,7 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         backgroundColor: Colors.green,
-                        content: Text('Workout created'),
+                        content: Text("Workout created"),
                       ),
                     );
                   }
@@ -109,7 +109,7 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                 }
               }
             },
-            child: const Text('Submit'),
+            child: const Text("Submit"),
           ),
         ],
       ),

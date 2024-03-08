@@ -1,10 +1,10 @@
-import 'dart:convert';
-import 'dart:io';
+import "dart:convert";
+import "dart:io";
 
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:wod_board_app/settings.dart';
-import 'package:http/http.dart' as http;
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:wod_board_app/settings.dart";
+import "package:http/http.dart" as http;
 
 class ApiService {
   final BuildContext context;

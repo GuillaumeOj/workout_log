@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:wod_board_app/models/workout.dart';
-import 'package:wod_board_app/widgets/misc/add_duration_repetition_panel.dart';
-import 'package:wod_board_app/widgets/misc/auto_complete_name.dart';
+import "package:flutter/material.dart";
+import "package:wod_board_app/models/workout.dart";
+import "package:wod_board_app/widgets/misc/add_duration_repetition_panel.dart";
+import "package:wod_board_app/widgets/misc/auto_complete_name.dart";
 
 class AddMovement extends StatefulWidget {
   const AddMovement({super.key, required this.onMovementChanged});

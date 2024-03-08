@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:wod_board_app/models/user.dart';
-import 'package:wod_board_app/settings.dart';
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:wod_board_app/models/user.dart";
+import "package:wod_board_app/settings.dart";
 
 class LogoutForm extends StatefulWidget {
   const LogoutForm({super.key});
