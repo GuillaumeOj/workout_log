@@ -4,10 +4,8 @@ import "package:flutter/material.dart";
 import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:provider/provider.dart";
 import "package:wod_board_app/settings.dart";
-import "package:wod_board_app/widgets/workouts/create_workout_screen.dart";
 import "package:wod_board_app/widgets/bottom_bar.dart";
-import "package:wod_board_app/widgets/home_screen.dart";
-import "package:wod_board_app/widgets/profile_screen.dart";
+import "package:wod_board_app/widgets/routers.dart";
 
 Future main() async {
   await dotenv.load(mergeWith: Platform.environment);
@@ -26,30 +24,13 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  int currentIndex = 0;
-
-  final List<Map<String, dynamic>> staticScreens = const [
-    {
-      "icon": Icon(Icons.home),
-      "label": "Home",
-      "screen": HomeScreen(),
-    },
-    {
-      "icon": Icon(Icons.add),
-      "label": "Add Workout",
-      "screen": AddWorkoutScreen()
-    },
-    {
-      "icon": Icon(Icons.account_circle),
-      "label": "MyProfile",
-      "screen": ProfileScreen()
-    },
-  ];
+  final navigatorKey = GlobalKey<NavigatorState>();
+  String _currentScreenLabel = "Home";
 
   // Callback function to update currentIndex
-  void onTabTapped(int index) {
+  void onTabTapped(int index, String screenLabel) {
     setState(() {
-      currentIndex = index;
+      _currentScreenLabel = screenLabel;
     });
   }
 
@@ -62,12 +43,17 @@ class MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: Scaffold(
-        appBar: AppBar(title: Text(staticScreens[currentIndex]["label"])),
-        body: staticScreens[currentIndex]["screen"],
+        appBar: AppBar(title: Text(_currentScreenLabel)),
+        body: Navigator(
+          key: navigatorKey,
+          initialRoute: Routes.home,
+          onGenerateRoute: (RouteSettings settings) {
+            return WorkoutRouter.generateRoute(settings);
+          },
+        ),
         bottomNavigationBar: BottomBar(
-          currentIndex: currentIndex,
-          itemValues: staticScreens,
           onTabTapped: onTabTapped,
+          navigatorKey: navigatorKey,
         ),
       ),
     );
