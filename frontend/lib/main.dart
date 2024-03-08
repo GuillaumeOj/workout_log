@@ -10,8 +10,15 @@ import "package:wod_board_app/widgets/routers.dart";
 Future main() async {
   await dotenv.load(mergeWith: Platform.environment);
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => SettingProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => SettingProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => BottomBarState(),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
@@ -24,11 +31,11 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  final navigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String _currentScreenLabel = "Home";
 
   // Callback function to update currentIndex
-  void onTabTapped(int index, String screenLabel) {
+  void onTabTapped(String screenLabel) {
     setState(() {
       _currentScreenLabel = screenLabel;
     });

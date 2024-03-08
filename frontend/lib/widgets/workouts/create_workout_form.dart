@@ -1,10 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import "dart:developer";
 
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 import "package:wod_board_app/api.dart";
 import "package:wod_board_app/models/workout.dart";
+import "package:wod_board_app/widgets/bottom_bar.dart";
 import "package:wod_board_app/widgets/misc/choice_list.dart";
 import "package:wod_board_app/widgets/rounds/add_round.dart";
+import "package:wod_board_app/widgets/routers.dart";
 
 class AddWorkoutForm extends StatefulWidget {
   const AddWorkoutForm({super.key});
@@ -96,13 +101,16 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                   );
 
                   if (mounted) {
-                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         backgroundColor: Colors.green,
                         content: Text("Workout created"),
                       ),
                     );
+
+                    Provider.of<BottomBarState>(context, listen: false)
+                        .updateIndexFromRoute(Routes.home);
+                    Navigator.of(context).pushNamed(Routes.home);
                   }
                 } catch (e) {
                   log(e.toString());
