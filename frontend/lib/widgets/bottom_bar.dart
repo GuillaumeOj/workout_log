@@ -45,6 +45,11 @@ class BottomBar extends StatelessWidget {
       selectedItemColor: Colors.blue,
       currentIndex: currentIndex,
       onTap: (int index) {
+        // Avoid navigating
+        if (index == currentIndex) {
+          return;
+        }
+
         String newLabel = staticScreens[index]["label"];
         String newRoute = staticScreens[index]["route"];
 
