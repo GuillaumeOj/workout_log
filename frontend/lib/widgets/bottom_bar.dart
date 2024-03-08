@@ -1,7 +1,26 @@
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 import "package:wod_board_app/widgets/routers.dart";
 
-class BottomBar extends StatefulWidget {
+const List<Map<String, dynamic>> staticScreens = [
+  {
+    "icon": Icon(Icons.home),
+    "label": "Home",
+    "route": Routes.home,
+  },
+  {
+    "icon": Icon(Icons.add),
+    "label": "Add Workout",
+    "route": Routes.createWorkout,
+  },
+  {
+    "icon": Icon(Icons.account_circle),
+    "label": "MyProfile",
+    "route": Routes.profile,
+  },
+];
+
+class BottomBar extends StatelessWidget {
   const BottomBar({
     super.key,
     required this.onTabTapped,
@@ -9,44 +28,21 @@ class BottomBar extends StatefulWidget {
   });
 
   final GlobalKey<NavigatorState> navigatorKey;
-  final void Function(int, String) onTabTapped;
-
-  @override
-  State<BottomBar> createState() => _BottomBarState();
-}
-
-class _BottomBarState extends State<BottomBar> {
-  int currentIndex = 0;
-  final List<Map<String, dynamic>> staticScreens = const [
-    {
-      "icon": Icon(Icons.home),
-      "label": "Home",
-      "route": Routes.home,
-    },
-    {
-      "icon": Icon(Icons.add),
-      "label": "Add Workout",
-      "route": Routes.createWorkout,
-    },
-    {
-      "icon": Icon(Icons.account_circle),
-      "label": "MyProfile",
-      "route": Routes.profile,
-    },
-  ];
+  final void Function(String) onTabTapped;
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = Provider.of<BottomBarState>(context).currentIndex;
+
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: (int index) {
-        setState(() {
-          currentIndex = index;
-        });
+        String newLabel = staticScreens[index]["label"];
+        String newRoute = staticScreens[index]["route"];
 
-        widget.onTabTapped(index, staticScreens[index]["label"] as String);
-        widget.navigatorKey.currentState!
-            .pushNamed(staticScreens[index]["route"]);
+        Provider.of<BottomBarState>(context, listen: false).updateIndex(index);
+        onTabTapped(newLabel);
+        navigatorKey.currentState!.pushNamed(newRoute);
       },
       items: staticScreens.map((item) {
         return BottomNavigationBarItem(
@@ -55,5 +51,22 @@ class _BottomBarState extends State<BottomBar> {
         );
       }).toList(),
     );
+  }
+}
+
+class BottomBarState extends ChangeNotifier {
+  int _currentIndex = 0;
+
+  int get currentIndex => _currentIndex;
+
+  void updateIndex(int index) {
+    _currentIndex = index;
+    notifyListeners();
+  }
+
+  void updateIndexFromRoute(String route) {
+    _currentIndex =
+        staticScreens.indexWhere((element) => element["route"] == route);
+    notifyListeners();
   }
 }
