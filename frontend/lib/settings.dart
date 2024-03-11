@@ -13,6 +13,8 @@ class SettingProvider extends ChangeNotifier {
   final apiUrlHost = dotenv.get("API_URL_HOST");
   final apiUrlPort = dotenv.get("API_URL_PORT", fallback: "");
 
+  final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
+
   void setCurrentUser(User newUser) {
     _currentUser = newUser;
     notifyListeners();

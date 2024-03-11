@@ -4,6 +4,7 @@ import "package:wod_board_app/api.dart";
 import "package:wod_board_app/settings.dart";
 import "package:wod_board_app/widgets/login_form.dart";
 import "package:wod_board_app/widgets/misc/cirular_progress_indicator.dart";
+import "package:wod_board_app/widgets/routers.dart";
 
 class ListWorkoutsScreen extends StatelessWidget {
   const ListWorkoutsScreen({super.key});
@@ -33,10 +34,17 @@ class ListWorkoutsScreen extends StatelessWidget {
                   return ListView.builder(
                     itemCount: workouts!.length,
                     itemBuilder: (context, index) {
+                      var workout = workouts[index];
                       return ListTile(
-                        title: Text(workouts[index]["name"] ??
-                            workouts[index]["workoutType"]),
-                        subtitle: Text(workouts[index]["description"] ?? ""),
+                        title: Text(workout["name"] ?? workout["workoutType"]),
+                        subtitle: Text(workout["description"] ?? ""),
+                        onTap: () {
+                          settingsProvider.mainNavigatorKey.currentState!
+                              .pushNamed(
+                            Routes.detailWorkout,
+                            arguments: workout["id"],
+                          );
+                        },
                       );
                     },
                   );
