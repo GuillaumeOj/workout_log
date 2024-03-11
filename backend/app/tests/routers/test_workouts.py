@@ -1,7 +1,10 @@
-import daiquiri
+import uuid
+
 from fastapi.testclient import TestClient
 from sqlmodel import Session, select
 
+from app.fixtures.users import create_user
+from app.fixtures.workouts import create_workout
 from app.models.tokens import Token
 from app.models.users import User
 from app.models.workouts import (
@@ -12,8 +15,6 @@ from app.models.workouts import (
     WorkoutDetail,
     WorkoutType,
 )
-
-logger = daiquiri.getLogger(__name__)
 
 
 def test_create_workout(client: TestClient, foo_token: tuple[Token, User, Session]):
@@ -156,3 +157,29 @@ def test_get_workouts(client: TestClient, foo_token: tuple[Token, User, Session]
     assert len(workouts) == 1
     assert workouts[0] == WorkoutDetail.from_db(workout).model_dump(mode="json", by_alias=True)
     assert workouts[0]["userId"] == str(user.id)
+
+
+def test_get_workout(client: TestClient, foo_token: tuple[Token, User, Session], workout: Workout):
+    token, _, session = foo_token
+
+    # User is not authenticated
+    response = client.get(f"/workouts/{workout.id}")
+    assert response.status_code == 401
+
+    # User is authenticated
+    headers = {"Authorization": f"{token.token_type} {token.access_token}"}
+    response = client.get(f"/workouts/{workout.id}", headers=headers)
+    assert response.status_code == 200
+    assert response.json() == WorkoutDetail.from_db(workout).model_dump(mode="json", by_alias=True)
+
+    # User is authenticated but the workout does not exist
+    foo_uuid = uuid.uuid4()
+    response = client.get(f"/workouts/{foo_uuid}", headers=headers)
+    assert response.status_code == 404
+
+    foo_user = create_user(session)
+    foo_workout = create_workout(session, foo_user)
+
+    # User is authenticated but the workout does not belong to the user
+    response = client.get(f"/workouts/{foo_workout.id}", headers=headers)
+    assert response.status_code == 404

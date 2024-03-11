@@ -8,7 +8,7 @@ from app.models.users import User
 
 
 def test_search(client: TestClient, foo_token: tuple[Token, User, Session]):
-    token, user, session = foo_token
+    token, _, session = foo_token
 
     # User is not authenticated
     response = client.get("/search")
