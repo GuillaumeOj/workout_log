@@ -22,7 +22,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     return ListView(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20.0,
+          ),
           child: currentUser.isAnonymous == true
               ? const LoginForm()
               : const AddWorkoutForm(),
