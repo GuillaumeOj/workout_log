@@ -1,7 +1,7 @@
 import typing
 import uuid as uuid_pkg
 
-from sqlmodel import Field, PrimaryKeyConstraint, Relationship, UniqueConstraint
+from sqlmodel import Field, PrimaryKeyConstraint, Relationship
 
 from app.models.core import WodBoardBase, WodBoardDatabseBase
 from app.utils.misc import WodBoardEnum
@@ -162,8 +162,6 @@ class WorkoutBase(WodBoardBase):
 
 
 class Workout(WodBoardDatabseBase, WorkoutBase, table=True):
-    __table_args__ = (UniqueConstraint("name", "user_id"),)
-
     user_id: uuid_pkg.UUID = Field(foreign_key="user.id", index=True)
 
     user: "User" = Relationship(back_populates="workouts")

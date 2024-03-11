@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:wod_board_app/api.dart";
+import "package:wod_board_app/widgets/misc/cirular_progress_indicator.dart";
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,10 @@ class HomeScreen extends StatelessWidget {
               future: apiService.fetchData("/"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
+                  return const SizedCircularProgressIndicator(
+                    width: 15,
+                    height: 15,
+                  );
                 } else if (snapshot.hasError) {
                   return Text("Error: ${snapshot.error}");
                 } else {

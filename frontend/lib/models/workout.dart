@@ -42,13 +42,13 @@ class CreateRound {
 
 class CreateWorkout {
   CreateWorkout({
-    required this.name,
+    this.name,
     this.description,
     required this.workoutType,
     this.rounds,
   });
 
-  String name;
+  String? name;
   String? description;
   String workoutType;
   List<CreateRound>? rounds;

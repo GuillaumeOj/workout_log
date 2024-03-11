@@ -14,6 +14,11 @@ const List<Map<String, dynamic>> staticScreens = [
     "route": Routes.createWorkout,
   },
   {
+    "icon": Icon(Icons.bar_chart),
+    "label": "My Workouts",
+    "route": Routes.myWorkouts,
+  },
+  {
     "icon": Icon(Icons.account_circle),
     "label": "MyProfile",
     "route": Routes.profile,
@@ -35,8 +40,16 @@ class BottomBar extends StatelessWidget {
     final currentIndex = Provider.of<BottomBarState>(context).currentIndex;
 
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      unselectedItemColor: Colors.blueGrey,
+      selectedItemColor: Colors.blue,
       currentIndex: currentIndex,
       onTap: (int index) {
+        // Avoid navigating
+        if (index == currentIndex) {
+          return;
+        }
+
         String newLabel = staticScreens[index]["label"];
         String newRoute = staticScreens[index]["route"];
 

@@ -58,6 +58,23 @@ class ApiService {
     return json.decode(response.body);
   }
 
+  Future<List<dynamic>> listData(
+    String path, {
+    Map<String, String> headers = const {},
+    Map<String, dynamic> queryParameters = const {},
+  }) async {
+    Uri listUrl = getUrl(path, queryParameters);
+    var endpointHeaders = getHeaders(headers);
+
+    final response = await http.get(listUrl, headers: endpointHeaders);
+
+    if (response.statusCode != HttpStatus.ok) {
+      throw Exception(json.decode(response.body));
+    }
+
+    return json.decode(response.body);
+  }
+
   Future<Map<String, dynamic>> postData(
     String path, {
     Map<String, dynamic> data = const {},

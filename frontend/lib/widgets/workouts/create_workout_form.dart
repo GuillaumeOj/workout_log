@@ -42,12 +42,6 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
             decoration: const InputDecoration(
               labelText: "Name",
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Please enter a name for the workout";
-              }
-              return null;
-            },
           ),
           TextFormField(
             controller: _descriptionController,
