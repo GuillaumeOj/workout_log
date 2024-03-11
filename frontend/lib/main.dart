@@ -31,7 +31,6 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String _currentScreenLabel = "Home";
 
   // Callback function to update currentIndex
@@ -43,6 +42,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsProvider = Provider.of<SettingProvider>(context);
     return MaterialApp(
       title: "Wod Board",
       theme: ThemeData(
@@ -52,7 +52,7 @@ class MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(title: Text(_currentScreenLabel)),
         body: Navigator(
-          key: navigatorKey,
+          key: settingsProvider.mainNavigatorKey,
           initialRoute: Routes.home,
           onGenerateRoute: (RouteSettings settings) {
             return WorkoutRouter.generateRoute(settings);
@@ -60,7 +60,7 @@ class MyAppState extends State<MyApp> {
         ),
         bottomNavigationBar: BottomBar(
           onTabTapped: onTabTapped,
-          navigatorKey: navigatorKey,
+          navigatorKey: settingsProvider.mainNavigatorKey,
         ),
       ),
     );
