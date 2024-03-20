@@ -34,7 +34,7 @@ def init_db():
     with Session(sync_engine) as session:
         create_equiments(session)
         create_movements(session)
-        user = create_user(session)
+        user = create_user(session, default_user=True)
         create_workout(session, user)
 
 
