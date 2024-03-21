@@ -51,23 +51,23 @@ class DetailWorkoutScreen extends StatelessWidget {
   }
 }
 
+String formatDuration(Duration duration) {
+  final minutes = duration.inMinutes;
+  final remainingSeconds = duration.inSeconds % 60;
+
+  if (minutes == 0) {
+    return "In $remainingSeconds seconds";
+  } else {
+    var minutesLabel = minutes > 1 ? "minutes" : "minute";
+    var remainingSecondsLabel =
+        remainingSeconds > 0 ? " and $remainingSeconds seconds" : "";
+    return "In $minutes $minutesLabel$remainingSecondsLabel";
+  }
+}
+
 class DetailRounds extends StatelessWidget {
   const DetailRounds({super.key, required this.rounds});
   final List<dynamic> rounds;
-
-  String formatDuration(Duration duration) {
-    final minutes = duration.inMinutes;
-    final remainingSeconds = duration.inSeconds % 60;
-
-    if (minutes == 0) {
-      return "In $remainingSeconds seconds";
-    } else {
-      var minutesLabel = minutes > 1 ? "minutes" : "minute";
-      var remainingSecondsLabel =
-          remainingSeconds > 0 ? " and $remainingSeconds seconds" : "";
-      return "In $minutes $minutesLabel$remainingSecondsLabel";
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,22 +88,54 @@ class DetailRounds extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Round #$position"),
-                ),
                 Row(
                   children: [
+                    Text("Round #$position / "),
                     if (duration.inSeconds > 0) Text(formatDuration(duration)),
                     if (repetitions > 0)
                       Text("${repetitions.toString()} times"),
                   ],
                 ),
+                const SizedBox(height: 10),
+                DetailMovements(movements: round["movements"]),
               ],
             ),
           );
         },
       ).toList(),
+    );
+  }
+}
+
+class DetailMovements extends StatelessWidget {
+  const DetailMovements({super.key, required this.movements});
+  final List<dynamic> movements;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: movements.map((movement) {
+        final duration = Duration(seconds: movement["durationSeconds"]);
+        final repetitions = movement["repetitions"];
+        final name = movement["name"];
+
+        return Container(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  const Icon(Icons.arrow_right),
+                  if (repetitions > 0) Text("${repetitions.toString()} "),
+                  Text("$name"),
+                  if (duration.inSeconds > 0)
+                    Text(" ${formatDuration(duration)}"),
+                ],
+              ),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }
