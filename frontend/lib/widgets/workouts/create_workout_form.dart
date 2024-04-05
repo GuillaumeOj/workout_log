@@ -1,7 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
-import "dart:developer";
-
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 import "package:wod_board_app/api.dart";
@@ -32,7 +28,8 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
 
   @override
   Widget build(BuildContext context) {
-    final apiService = ApiService(context);
+    final api = Provider.of<ApiService>(context);
+
     return Form(
       key: _formkey,
       child: Column(
@@ -84,30 +81,39 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                 String description = _descriptionController.text;
                 String workoutType = _selectedWorkoutType;
 
+                final scaffoldMessenger = ScaffoldMessenger.of(context);
+                final bottomBarState =
+                    Provider.of<BottomBarState>(context, listen: false);
+                final navigator = Navigator.of(context);
+
                 workout.name = name;
                 workout.description = description;
                 workout.workoutType = workoutType;
 
                 try {
-                  await apiService.postData(
+                  await api.postData(
                     "/workouts",
                     data: workout.toJson(),
                   );
 
                   if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    scaffoldMessenger.showSnackBar(
                       const SnackBar(
                         backgroundColor: Colors.green,
                         content: Text("Workout created"),
                       ),
                     );
 
-                    Provider.of<BottomBarState>(context, listen: false)
-                        .updateIndexFromRoute(Routes.home);
-                    Navigator.of(context).pushNamed(Routes.home);
+                    bottomBarState.updateIndexFromRoute(Routes.home);
+                    navigator.pushNamed(Routes.home);
                   }
-                } catch (e) {
-                  log(e.toString());
+                } catch (error) {
+                  scaffoldMessenger.showSnackBar(
+                    SnackBar(
+                      content: Text(error.toString()),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
                 }
               }
             },

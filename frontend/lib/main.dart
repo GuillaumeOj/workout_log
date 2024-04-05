@@ -3,6 +3,7 @@ import "dart:io";
 import "package:flutter/material.dart";
 import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:provider/provider.dart";
+import "package:wod_board_app/api.dart";
 import "package:wod_board_app/settings.dart";
 import "package:wod_board_app/widgets/bottom_bar.dart";
 import "package:wod_board_app/widgets/routers.dart";
@@ -13,10 +14,15 @@ Future main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => SettingProvider(),
+          create: (_) => SettingsService(),
         ),
         ChangeNotifierProvider(
           create: (_) => BottomBarState(),
+        ),
+        ProxyProvider<SettingsService, ApiService>(
+          update: (BuildContext context, SettingsService settings,
+                  ApiService? apiService) =>
+              ApiService(settings),
         ),
       ],
       child: const MyApp(),
@@ -42,7 +48,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final settingsProvider = Provider.of<SettingProvider>(context);
+    final settings = Provider.of<SettingsService>(context);
     return MaterialApp(
       title: "Wod Board",
       theme: ThemeData(
@@ -52,15 +58,15 @@ class MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(title: Text(_currentScreenLabel)),
         body: Navigator(
-          key: settingsProvider.mainNavigatorKey,
+          key: settings.mainNavigatorKey,
           initialRoute: Routes.home,
-          onGenerateRoute: (RouteSettings settings) {
-            return WorkoutRouter.generateRoute(settings);
+          onGenerateRoute: (RouteSettings routeSettings) {
+            return WorkoutRouter.generateRoute(routeSettings);
           },
         ),
         bottomNavigationBar: BottomBar(
           onTabTapped: onTabTapped,
-          navigatorKey: settingsProvider.mainNavigatorKey,
+          navigatorKey: settings.mainNavigatorKey,
         ),
       ),
     );
