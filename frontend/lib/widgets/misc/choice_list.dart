@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 import "package:wod_board_app/api.dart";
 import "package:wod_board_app/widgets/misc/cirular_progress_indicator.dart";
 
@@ -54,10 +55,10 @@ class DropdownListFromAPI extends StatefulWidget {
 class _DropdownListFromAPIState extends State<DropdownListFromAPI> {
   @override
   Widget build(BuildContext context) {
-    var apiService = ApiService(context);
+    var api = Provider.of<ApiService>(context);
 
     return FutureBuilder<List<String>>(
-      future: fetchChoices(widget.path, apiService),
+      future: fetchChoices(widget.path, api),
       builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedCircularProgressIndicator(

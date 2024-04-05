@@ -1,5 +1,6 @@
 import "package:basic_utils/basic_utils.dart";
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 import "package:wod_board_app/api.dart";
 
 class AsyncAutocompleteName extends StatefulWidget {
@@ -40,13 +41,13 @@ class _AsyncAutocompleteNameState extends State<AsyncAutocompleteName> {
 
   @override
   Widget build(BuildContext context) {
-    var apiService = ApiService(context);
+    var api = Provider.of<ApiService>(context);
 
     return Autocomplete<String>(
       optionsBuilder: (TextEditingValue textEditingValue) async {
         _searchingWithQuery = textEditingValue.text;
-        final Iterable<String> options = await apiService.searchName(
-            _searchingWithQuery!, widget.searchType);
+        final Iterable<String> options =
+            await api.searchName(_searchingWithQuery!, widget.searchType);
 
         if (_searchingWithQuery != textEditingValue.text) {
           return _lastOptions;
