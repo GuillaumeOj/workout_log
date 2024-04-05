@@ -15,7 +15,7 @@ class _LogoutFormState extends State<LogoutForm> {
 
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = Provider.of<SettingProvider>(context);
+    var settings = Provider.of<SettingsService>(context);
 
     return Form(
       key: _formkey,
@@ -24,8 +24,8 @@ class _LogoutFormState extends State<LogoutForm> {
           ElevatedButton(
               style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
               onPressed: () async {
-                settingsProvider.setCurrentUser(User(isAnonymous: true));
-                settingsProvider.setCurrentUsetToken(null);
+                settings.setCurrentUser(User(isAnonymous: true));
+                settings.setCurrentUsetToken(null);
               },
               child: const Text("Logout")),
         ],

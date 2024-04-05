@@ -1,25 +1,29 @@
 import "dart:convert";
 import "dart:io";
 
-import "package:flutter/material.dart";
-import "package:provider/provider.dart";
 import "package:wod_board_app/settings.dart";
 import "package:http/http.dart" as http;
 
-class ApiService {
-  final BuildContext context;
-  late SettingProvider settingsProvider;
+class ApiException implements Exception {
+  ApiException(this.detail);
+  final String detail;
 
-  ApiService(this.context) {
-    settingsProvider = Provider.of<SettingProvider>(context);
+  @override
+  String toString() {
+    return detail;
   }
+}
 
-  String get scheme =>
-      settingsProvider.environnment == "dev" ? "http" : "https";
+class ApiService {
+  ApiService(SettingsService settings) : _settings = settings;
+
+  final SettingsService _settings;
+
+  String get scheme => _settings.environnment == "dev" ? "http" : "https";
   int get defaultPort => scheme == "http" ? 80 : 443;
-  String get host => settingsProvider.apiUrlHost;
-  int get port => settingsProvider.apiUrlPort != ""
-      ? int.parse(settingsProvider.apiUrlPort)
+  String get host => _settings.apiUrlHost;
+  int get port => _settings.apiUrlPort != ""
+      ? int.parse(_settings.apiUrlPort)
       : defaultPort;
 
   Uri getUrl(String path, Map<String, dynamic> queryParameters) {
@@ -34,9 +38,8 @@ class ApiService {
 
   Map<String, String> getHeaders(Map<String, String> headers) {
     var defaultHeaders = {"Content-Type": "application/json"};
-    if (settingsProvider.currentUserToken != null) {
-      defaultHeaders["Authorization"] =
-          settingsProvider.currentUserToken.toString();
+    if (_settings.currentUserToken != null) {
+      defaultHeaders["Authorization"] = _settings.currentUserToken.toString();
     }
     return {...defaultHeaders, ...headers};
   }
@@ -96,7 +99,7 @@ class ApiService {
         await http.post(postUrl, body: body, headers: endpointHeaders);
 
     if (response.statusCode != expectedStatus) {
-      throw Exception(json.decode(response.body));
+      throw ApiException(json.decode(response.body)["detail"]);
     }
 
     return json.decode(response.body);
