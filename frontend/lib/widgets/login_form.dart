@@ -63,6 +63,9 @@ class _LoginFormState extends State<LoginForm> {
                 String email = _emailController.text;
                 String password = _passwordController.text;
 
+                final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+                // Retrieve the user token
                 try {
                   var userTokenData = await api.postData("/users/token",
                       data: {"username": email, "password": password},
@@ -74,19 +77,27 @@ class _LoginFormState extends State<LoginForm> {
                   Token userToken = Token.fromJson(userTokenData);
                   settings.setCurrentUsetToken(userToken);
                 } catch (error) {
-                  dev.log("tokenError", error: error);
+                  if (error is Exception) {
+                    scaffoldMessenger.showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          error.toString(),
+                        ),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 }
               }
 
-              if (settings.currentUserToken != null) {
-                try {
-                  var userData = await api.fetchData("/users/me");
+              // Set the current user in settings
+              try {
+                var userData = await api.fetchData("/users/me");
 
-                  User currentUser = User.fromJson(userData);
-                  settings.setCurrentUser(currentUser);
-                } catch (error) {
-                  dev.log("userError", error: error);
-                }
+                User currentUser = User.fromJson(userData);
+                settings.setCurrentUser(currentUser);
+              } catch (error) {
+                dev.log("userError", error: error);
               }
             },
             child: const Text("Login"),

@@ -85,6 +85,8 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                 String description = _descriptionController.text;
                 String workoutType = _selectedWorkoutType;
 
+                final scaffoldMessenger = ScaffoldMessenger.of(context);
+
                 workout.name = name;
                 workout.description = description;
                 workout.workoutType = workoutType;
@@ -96,7 +98,7 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                   );
 
                   if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
+                    scaffoldMessenger.showSnackBar(
                       const SnackBar(
                         backgroundColor: Colors.green,
                         content: Text("Workout created"),
@@ -107,8 +109,13 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                         .updateIndexFromRoute(Routes.home);
                     Navigator.of(context).pushNamed(Routes.home);
                   }
-                } catch (e) {
-                  log(e.toString());
+                } catch (error) {
+                  scaffoldMessenger.showSnackBar(
+                    SnackBar(
+                      content: Text(error.toString()),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
                 }
               }
             },

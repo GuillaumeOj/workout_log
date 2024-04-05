@@ -4,6 +4,16 @@ import "dart:io";
 import "package:wod_board_app/settings.dart";
 import "package:http/http.dart" as http;
 
+class ApiException implements Exception {
+  ApiException(this.detail);
+  final String detail;
+
+  @override
+  String toString() {
+    return detail;
+  }
+}
+
 class ApiService {
   ApiService(SettingsService settings) : _settings = settings;
 
@@ -89,7 +99,7 @@ class ApiService {
         await http.post(postUrl, body: body, headers: endpointHeaders);
 
     if (response.statusCode != expectedStatus) {
-      throw Exception(json.decode(response.body));
+      throw ApiException(json.decode(response.body)["detail"]);
     }
 
     return json.decode(response.body);
