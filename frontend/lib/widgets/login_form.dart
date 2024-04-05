@@ -21,8 +21,8 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = Provider.of<SettingProvider>(context);
-    var apiService = ApiService(context);
+    var settings = Provider.of<SettingsService>(context);
+    var api = Provider.of<ApiService>(context);
 
     return Form(
       key: _formkey,
@@ -58,39 +58,39 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 20.0)),
           ElevatedButton(
-              onPressed: () async {
-                if (_formkey.currentState!.validate()) {
-                  String email = _emailController.text;
-                  String password = _passwordController.text;
+            onPressed: () async {
+              if (_formkey.currentState!.validate()) {
+                String email = _emailController.text;
+                String password = _passwordController.text;
 
-                  try {
-                    var userTokenData = await apiService.postData(
-                        "/users/token",
-                        data: {"username": email, "password": password},
-                        headers: {
-                          "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        expectedStatus: HttpStatus.ok);
+                try {
+                  var userTokenData = await api.postData("/users/token",
+                      data: {"username": email, "password": password},
+                      headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                      },
+                      expectedStatus: HttpStatus.ok);
 
-                    Token userToken = Token.fromJson(userTokenData);
-                    settingsProvider.setCurrentUsetToken(userToken);
-                  } catch (error) {
-                    dev.log("tokenError", error: error);
-                  }
+                  Token userToken = Token.fromJson(userTokenData);
+                  settings.setCurrentUsetToken(userToken);
+                } catch (error) {
+                  dev.log("tokenError", error: error);
                 }
+              }
 
-                if (settingsProvider.currentUserToken != null) {
-                  try {
-                    var userData = await apiService.fetchData("/users/me");
+              if (settings.currentUserToken != null) {
+                try {
+                  var userData = await api.fetchData("/users/me");
 
-                    User currentUser = User.fromJson(userData);
-                    settingsProvider.setCurrentUser(currentUser);
-                  } catch (error) {
-                    dev.log("userError", error: error);
-                  }
+                  User currentUser = User.fromJson(userData);
+                  settings.setCurrentUser(currentUser);
+                } catch (error) {
+                  dev.log("userError", error: error);
                 }
-              },
-              child: const Text("Login")),
+              }
+            },
+            child: const Text("Login"),
+          ),
         ],
       ),
     );

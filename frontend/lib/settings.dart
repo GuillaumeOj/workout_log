@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:wod_board_app/models/user.dart";
 
-class SettingProvider extends ChangeNotifier {
+class SettingsService extends ChangeNotifier {
   User _currentUser = User(isAnonymous: true);
   User get currentUser => _currentUser;
 

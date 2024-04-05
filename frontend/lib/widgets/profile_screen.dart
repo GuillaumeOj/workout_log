@@ -15,8 +15,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = Provider.of<SettingProvider>(context);
-    var currentUser = settingsProvider.currentUser;
+    var settings = Provider.of<SettingsService>(context);
+    var currentUser = settings.currentUser;
 
     return Center(
       child: Padding(

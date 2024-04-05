@@ -16,8 +16,8 @@ class AddWorkoutScreen extends StatefulWidget {
 class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = Provider.of<SettingProvider>(context);
-    var currentUser = settingsProvider.currentUser;
+    var settings = Provider.of<SettingsService>(context);
+    var currentUser = settings.currentUser;
 
     return ListView(
       children: <Widget>[

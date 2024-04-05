@@ -12,19 +12,18 @@ class DetailWorkoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settingsProvider = Provider.of<SettingProvider>(context);
-    final apiService = ApiService(context);
+    final settings = Provider.of<SettingsService>(context);
+    final api = Provider.of<ApiService>(context);
 
     return Column(
       children: [
         ElevatedButton.icon(
-          onPressed: () =>
-              settingsProvider.mainNavigatorKey.currentState!.pop(context),
+          onPressed: () => settings.mainNavigatorKey.currentState!.pop(context),
           icon: const Icon(Icons.arrow_back),
           label: const Text("Back"),
         ),
         FutureBuilder(
-          future: apiService.fetchData("/workouts/$workoutUUID"),
+          future: api.fetchData("/workouts/$workoutUUID"),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const SizedCircularProgressIndicator(

@@ -32,7 +32,8 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
 
   @override
   Widget build(BuildContext context) {
-    final apiService = ApiService(context);
+    final api = Provider.of<ApiService>(context);
+
     return Form(
       key: _formkey,
       child: Column(
@@ -89,7 +90,7 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                 workout.workoutType = workoutType;
 
                 try {
-                  await apiService.postData(
+                  await api.postData(
                     "/workouts",
                     data: workout.toJson(),
                   );

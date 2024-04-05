@@ -10,9 +10,11 @@ class ListWorkoutsScreen extends StatelessWidget {
   const ListWorkoutsScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    var settingsProvider = Provider.of<SettingProvider>(context);
-    var currentUser = settingsProvider.currentUser;
-    var apiService = ApiService(context);
+    var settings = Provider.of<SettingsService>(context);
+    var currentUser = settings.currentUser;
+
+    var api = Provider.of<ApiService>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 20.0,
@@ -20,7 +22,7 @@ class ListWorkoutsScreen extends StatelessWidget {
       child: currentUser.isAnonymous == true
           ? const LoginForm()
           : FutureBuilder(
-              future: apiService.listData("/workouts"),
+              future: api.listData("/workouts"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const SizedCircularProgressIndicator(
@@ -39,8 +41,7 @@ class ListWorkoutsScreen extends StatelessWidget {
                         title: Text(workout["name"] ?? workout["workoutType"]),
                         subtitle: Text(workout["description"] ?? ""),
                         onTap: () {
-                          settingsProvider.mainNavigatorKey.currentState!
-                              .pushNamed(
+                          settings.mainNavigatorKey.currentState!.pushNamed(
                             Routes.detailWorkout,
                             arguments: workout["id"],
                           );
