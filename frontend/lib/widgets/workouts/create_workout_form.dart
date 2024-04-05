@@ -1,7 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
-import "dart:developer";
-
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 import "package:wod_board_app/api.dart";
@@ -86,6 +82,9 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                 String workoutType = _selectedWorkoutType;
 
                 final scaffoldMessenger = ScaffoldMessenger.of(context);
+                final bottomBarState =
+                    Provider.of<BottomBarState>(context, listen: false);
+                final navigator = Navigator.of(context);
 
                 workout.name = name;
                 workout.description = description;
@@ -105,9 +104,8 @@ class _AddWorkoutFormState extends State<AddWorkoutForm> {
                       ),
                     );
 
-                    Provider.of<BottomBarState>(context, listen: false)
-                        .updateIndexFromRoute(Routes.home);
-                    Navigator.of(context).pushNamed(Routes.home);
+                    bottomBarState.updateIndexFromRoute(Routes.home);
+                    navigator.pushNamed(Routes.home);
                   }
                 } catch (error) {
                   scaffoldMessenger.showSnackBar(
