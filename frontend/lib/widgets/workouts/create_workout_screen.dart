@@ -20,6 +20,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     var currentUser = settings.currentUser;
 
     return ListView(
+      key: const Key("addWorkoutScreenListView"),
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(
