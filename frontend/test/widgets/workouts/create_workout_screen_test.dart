@@ -40,7 +40,7 @@ void main() {
               ],
               child: const MaterialApp(
                 home: Scaffold(
-                  body: AddWorkoutScreen(),
+                  body: CreateWorkoutScreen(),
                 ),
               ),
             ),
@@ -79,13 +79,13 @@ void main() {
               ],
               child: const MaterialApp(
                 home: Scaffold(
-                  body: AddWorkoutScreen(),
+                  body: CreateWorkoutScreen(),
                 ),
               ),
             ),
           );
 
-          expect(find.byType(AddWorkoutForm), findsOneWidget);
+          expect(find.byType(CreateWorkoutForm), findsOneWidget);
 
           // Name and description fields
           expect(find.byType(TextFormField), findsAtLeast(2));

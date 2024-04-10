@@ -6,14 +6,14 @@ import "package:wod_board_app/widgets/login_form.dart";
 
 const Duration debounceDuration = Duration(milliseconds: 500);
 
-class AddWorkoutScreen extends StatefulWidget {
-  const AddWorkoutScreen({super.key});
+class CreateWorkoutScreen extends StatefulWidget {
+  const CreateWorkoutScreen({super.key});
 
   @override
-  State<AddWorkoutScreen> createState() => _AddWorkoutScreenState();
+  State<CreateWorkoutScreen> createState() => _CreateWorkoutScreenState();
 }
 
-class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
+class _CreateWorkoutScreenState extends State<CreateWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     var settings = Provider.of<SettingsService>(context);
@@ -28,7 +28,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           ),
           child: currentUser.isAnonymous == true
               ? const LoginForm()
-              : const AddWorkoutForm(),
+              : const CreateWorkoutForm(),
         ),
       ],
     );

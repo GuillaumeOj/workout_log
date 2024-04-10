@@ -46,7 +46,7 @@ void main() {
               child: const MaterialApp(
                 home: Scaffold(
                   body: SingleChildScrollView(
-                    child: AddWorkoutForm(),
+                    child: CreateWorkoutForm(),
                   ),
                 ),
               ),

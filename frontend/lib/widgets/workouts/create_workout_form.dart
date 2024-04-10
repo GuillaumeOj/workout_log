@@ -7,14 +7,14 @@ import "package:wod_board_app/widgets/misc/choice_list.dart";
 import "package:wod_board_app/widgets/rounds/add_round.dart";
 import "package:wod_board_app/widgets/routers.dart";
 
-class AddWorkoutForm extends StatefulWidget {
-  const AddWorkoutForm({super.key});
+class CreateWorkoutForm extends StatefulWidget {
+  const CreateWorkoutForm({super.key});
 
   @override
-  State<AddWorkoutForm> createState() => _AddWorkoutFormState();
+  State<CreateWorkoutForm> createState() => _CreateWorkoutFormState();
 }
 
-class _AddWorkoutFormState extends State<AddWorkoutForm> {
+class _CreateWorkoutFormState extends State<CreateWorkoutForm> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
