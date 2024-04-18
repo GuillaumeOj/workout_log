@@ -28,33 +28,48 @@ class _LoginFormState extends State<LoginForm> {
       key: _formkey,
       child: Column(
         children: [
-          TextFormField(
-            controller: _emailController,
-            decoration: const InputDecoration(
-              hintText: "Email",
-              labelText: "Email",
+          AutofillGroup(
+            child: Column(
+              children: [
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  autofillHints: const [
+                    AutofillHints.username,
+                  ],
+                  textInputAction: TextInputAction.next,
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    hintText: "Email",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your email";
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  autofillHints: const [
+                    AutofillHints.password,
+                  ],
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
+                    labelText: "Password",
+                  ),
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your password";
+                    }
+                    return null;
+                  },
+                ),
+              ],
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Please enter your email";
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: _passwordController,
-            decoration: const InputDecoration(
-              labelText: "Password",
-            ),
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Please enter your password";
-              }
-              return null;
-            },
           ),
           const Padding(padding: EdgeInsets.symmetric(vertical: 20.0)),
           ElevatedButton(

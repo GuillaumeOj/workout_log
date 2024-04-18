@@ -19,7 +19,7 @@ class WorkoutRouter {
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.createWorkout:
-        return MaterialPageRoute(builder: (_) => const AddWorkoutScreen());
+        return MaterialPageRoute(builder: (_) => const CreateWorkoutScreen());
       case Routes.myWorkouts:
         return MaterialPageRoute(builder: (_) => const ListWorkoutsScreen());
       case Routes.detailWorkout:
