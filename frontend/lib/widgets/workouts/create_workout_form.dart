@@ -14,13 +14,20 @@ class CreateWorkoutForm extends StatefulWidget {
   State<CreateWorkoutForm> createState() => _CreateWorkoutFormState();
 }
 
-class _CreateWorkoutFormState extends State<CreateWorkoutForm> {
+abstract class CreateWorkoutFormState extends State<CreateWorkoutForm> {
+  String? get selectedWorkoutType;
+}
+
+class _CreateWorkoutFormState extends CreateWorkoutFormState {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
-  late String _selectedWorkoutType;
+  String? _selectedWorkoutType;
   CreateWorkout workout = CreateWorkout(name: "", workoutType: "AMRAP");
+
+  @override
+  String? get selectedWorkoutType => _selectedWorkoutType;
 
   void onRoundChanged(CreateRound round) {
     workout.rounds = [round];
@@ -56,8 +63,17 @@ class _CreateWorkoutFormState extends State<CreateWorkoutForm> {
               Expanded(
                 child: DropdownListFromAPI(
                   path: "workouts/workout-types",
-                  onSelected: (String value) {
-                    _selectedWorkoutType = value;
+                  onChanged: (String value) {
+                    setState(() {
+                      _selectedWorkoutType = value;
+                    });
+                  },
+                  selectedChoice: _selectedWorkoutType,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return "Please select a workout type";
+                    }
+                    return null;
                   },
                 ),
               ),
@@ -79,7 +95,7 @@ class _CreateWorkoutFormState extends State<CreateWorkoutForm> {
               if (_formkey.currentState!.validate()) {
                 String name = _nameController.text;
                 String description = _descriptionController.text;
-                String workoutType = _selectedWorkoutType;
+                String? workoutType = _selectedWorkoutType;
 
                 final scaffoldMessenger = ScaffoldMessenger.of(context);
                 final bottomBarState =
@@ -88,7 +104,7 @@ class _CreateWorkoutFormState extends State<CreateWorkoutForm> {
 
                 workout.name = name;
                 workout.description = description;
-                workout.workoutType = workoutType;
+                workout.workoutType = workoutType ?? "";
 
                 try {
                   await api.postData(

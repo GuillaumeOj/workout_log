@@ -12,6 +12,7 @@ import 'package:mockito/src/dummies.dart' as _i5;
 import 'package:wod_board_app/api.dart' as _i7;
 import 'package:wod_board_app/models/user.dart' as _i3;
 import 'package:wod_board_app/settings.dart' as _i4;
+import 'package:wod_board_app/widgets/bottom_bar.dart' as _i9;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -385,4 +386,77 @@ class MockApiService extends _i2.Mock implements _i7.ApiService {
         returnValueForMissingStub:
             _i8.Future<Iterable<String>>.value(<String>[]),
       ) as _i8.Future<Iterable<String>>);
+}
+
+/// A class which mocks [BottomBarState].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockBottomBarState extends _i2.Mock implements _i9.BottomBarState {
+  @override
+  int get currentIndex => (super.noSuchMethod(
+        Invocation.getter(#currentIndex),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  bool get hasListeners => (super.noSuchMethod(
+        Invocation.getter(#hasListeners),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  void updateIndex(int? index) => super.noSuchMethod(
+        Invocation.method(
+          #updateIndex,
+          [index],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void updateIndexFromRoute(String? route) => super.noSuchMethod(
+        Invocation.method(
+          #updateIndexFromRoute,
+          [route],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(_i6.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
